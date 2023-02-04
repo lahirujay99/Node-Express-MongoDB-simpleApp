@@ -21,7 +21,19 @@ const createproduct = async (req, res, next) => {
   res.json({ newProduct });
 };
 
-const getproduct = async (req, res, next) => {};
+const getproduct = async (req, res, next) => {
+  const client = new MongoClient(url);
+  let product;
+  try {
+    await client.connect();
+    const db = client.db();
+    product = await db.collection('products').find().toArray();
+  } catch (error) {
+    return res.json({ message: 'Could not retrive products' });
+  }
+  client.close();
+  res.json({ products: product });
+};
 
 exports.createproduct = createproduct;
 exports.getproduct = getproduct;
