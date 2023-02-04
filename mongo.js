@@ -17,7 +17,7 @@ const createproduct = async (req, res, next) => {
   } catch (error) {
     return res.json({ mesage: 'Could not store data' });
   }
-  //client.close(); // close connection
+  client.close(); // close connection
   res.json({ newProduct });
 };
 
